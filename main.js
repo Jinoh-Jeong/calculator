@@ -1,4 +1,4 @@
-let left = null, right = null, oper = null;
+let left = null, right = null, oper = null; resValue = null; res = false;
 
 function save(){
     const inp = document.getElementById("top-inp");
@@ -21,24 +21,23 @@ function save(){
     inp.value = value
 
     if(res) {
-        let res = " ";
 
         switch(oper){
             case "+":
-                res = parseInt(left) + parseInt(right)
+                resValue = parseInt(left) + parseInt(right)
                 break;
             case "-":
-                res = parseInt(left) - parseInt(right)
+                resValue = parseInt(left) - parseInt(right)
                 break;
             case "/":
-                res = parseInt(left) / parseInt(right)
+                resValue = parseInt(left) / parseInt(right)
                 break;
             case "*":
-                res = parseInt(left) * parseInt(right)
+                resValue = parseInt(left) * parseInt(right)
                 break;
         }
 
-        value += "= " + res;
+        value += "= " + resValue;
         inp.value = value
     }
 
@@ -81,6 +80,29 @@ function inputOper(op) {
 
         return;
     }
+    if(op === "-" && oper !== null){
+        right = "-"
+        save()
+        return;
+    }
     oper = op;
+    save()
+}
+
+function inputEqu() {
+
+    if(left === null || right === null || !oper)
+    return;
+    
+    if(res){
+        left = resValue
+        right = null
+        resValue = null
+        oper = null
+        res = false
+    }
+    else {
+        res = true
+    }
     save()
 }
